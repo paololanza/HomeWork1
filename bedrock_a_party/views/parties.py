@@ -16,9 +16,9 @@ def all_parties():
             #create a new party
             result = create_party(request)
 
-        except CannotPartyAloneError:
-            #return status 400
-            abort(400)
+        #case in which the party hasn't guests
+        except CannotPartyAloneError as e:
+            abort(400, str(e))
 
     elif request.method == 'GET':
         #call the function that return all parties
@@ -83,12 +83,12 @@ def edit_foodlist(id, user, item):
             result = jsonify(party.add_to_food_list(item, user).serialize())
         
         #case in which the user is not invited at the party identified by id
-        except NotInvitedGuestError:
-            abort(401)
+        except NotInvitedGuestError as e:
+            abort(401, str(e))
 
         #case in which the Food object is already insert by user
-        except ItemAlreadyInsertedByUser:
-            abort(400)
+        except ItemAlreadyInsertedByUser as e:
+            abort(400, str(e))
 
     if 'DELETE' == request.method:
         #delete Food object from the Foodlist of the party identified by id
@@ -100,8 +100,8 @@ def edit_foodlist(id, user, item):
             result = jsonify({"msg" : "Food deleted!"})
 
         #case in which the Food not existing 
-        except NotExistingFoodError:
-            abort(400)
+        except NotExistingFoodError as e:
+            abort(400, str(e))
 
     return result
 
