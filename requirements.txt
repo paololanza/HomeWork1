@@ -27,7 +27,7 @@ pyparsing==2.4.7
 pyrsistent==0.18.0
 pytest==6.2.5
 pytest-cov==3.0.0
-PyYAML==5.2b1
+pyyaml>=5.4
 requests==2.26.0
 six==1.16.0
 swagger-parser==1.0.2
